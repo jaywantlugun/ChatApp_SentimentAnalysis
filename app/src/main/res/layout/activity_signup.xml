@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignupActivity"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:gravity="center_vertical">
+
+
+
+    <TextView
+        android:layout_marginBottom="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create Account"
+        android:textSize="45dp"
+        android:fontFamily="cursive"
+        android:textStyle="italic"
+        android:textColor="@color/black" />
+
+    <ImageView
+        android:id="@+id/signup_image"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="@drawable/image"/>
+
+
+    <TextView
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="UPLOAD IMAGE"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginBottom="30dp"/>
+
+
+    <EditText
+        android:id="@+id/edt_signup_name"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/border"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:drawableStart="@drawable/ic_baseline_person_24"
+        android:hint="Name"
+        android:drawablePadding="5dp"
+        />
+
+    <EditText
+        android:id="@+id/edt_signup_number"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/border"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:drawableStart="@drawable/ic_baseline_local_phone_24"
+        android:hint="Phone Number"
+        android:drawablePadding="5dp"
+        />
+
+    <EditText
+        android:id="@+id/edt_signup_email"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/border"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:drawableStart="@drawable/ic_baseline_email_24"
+        android:hint="Email"
+        android:drawablePadding="5dp"
+        />
+
+    <EditText
+        android:id="@+id/edt_signup_password"
+        android:drawablePadding="5dp"
+        android:hint="Password"
+        android:drawableStart="@drawable/ic_baseline_lock_24"
+        android:background="@drawable/border"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:inputType="textVisiblePassword"
+        />
+
+    <Button
+        android:id="@+id/btn_signup"
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:backgroundTint="#C092D9"
+        android:text="SIGN UP"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="@color/black"/>
+
+    <Button
+        android:id="@+id/btn_already_have_account"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:background="@android:color/transparent"
+        android:text="ALREADY HAVE AN ACCOUNT"
+        android:textColor="@color/black"/>
+
+</LinearLayout>
