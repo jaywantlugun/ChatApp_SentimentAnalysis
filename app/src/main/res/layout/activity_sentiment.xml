@@ -15,7 +15,7 @@
         android:layout_margin="4dp"
         android:gravity="center"
         android:padding="4dp"
-        android:text="Pie Chart"
+        android:text="Sentiment Analysis Of Both"
         android:textAlignment="center"
         android:textColor="@color/purple_200"
         android:textSize="20sp"
@@ -27,14 +27,14 @@
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_below="@id/idTVHead"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp" />
+        android:layout_centerHorizontal="true" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/caption"
         android:layout_below="@id/pieChart"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal"
         android:weightSum="3">
 
@@ -77,6 +77,63 @@
             android:textAlignment="center"
             android:textColor="@color/black" />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/caption"
+        android:weightSum="2">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_gravity="center">
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:layout_gravity="center"
+                android:id="@+id/pieChart1"
+                android:layout_width="150dp"
+                android:layout_height="200dp"
+                android:layout_centerHorizontal="true"
+                />
+
+            <TextView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sender's"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_gravity="center">
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:layout_gravity="center"
+                android:id="@+id/pieChart2"
+                android:layout_width="150dp"
+                android:layout_height="200dp"
+                android:layout_centerHorizontal="true"
+                />
+
+            <TextView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Receiver's"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 
 
 

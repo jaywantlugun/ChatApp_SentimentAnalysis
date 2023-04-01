@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -53,6 +55,16 @@ class ChatActivity : AppCompatActivity() {
         img_ref.addValueEventListener(object :ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 Sender_image = snapshot.value.toString()
+                Picasso.get().load(Receiver_image).into(chat_person_image,object :Callback{
+                    override fun onSuccess() {
+
+                    }
+
+                    override fun onError(e: Exception?) {
+                        Toast.makeText(this@ChatActivity,e!!.message,Toast.LENGTH_LONG).show()
+                    }
+
+                })
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -62,7 +74,7 @@ class ChatActivity : AppCompatActivity() {
         })
 
         chat_person_name.setText(Receiver_name)
-        Picasso.get().load(Receiver_image).into(chat_person_image)
+
 
         btn_send_chat_message.setOnClickListener {
             if(chat_message.text.toString()==""){
