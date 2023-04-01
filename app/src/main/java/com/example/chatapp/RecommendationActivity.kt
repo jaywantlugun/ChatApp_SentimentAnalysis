@@ -5,7 +5,10 @@ import android.graphics.Color
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
@@ -20,6 +23,8 @@ import java.util.concurrent.ScheduledThreadPoolExecutor
 class RecommendationActivity : AppCompatActivity() {
 
     var messageList: ArrayList<Messages?> = ArrayList()
+    var moviesList:ArrayList<Item> = ArrayList()
+    var musicList:ArrayList<Item> = ArrayList()
     lateinit var Sender_uid:String
 
     var Sender_message_count:Int = 0
@@ -33,16 +38,26 @@ class RecommendationActivity : AppCompatActivity() {
 
     lateinit var pieChart: PieChart
 
+    lateinit var recyclerview_music:RecyclerView
+    lateinit var recyclerview_movies:RecyclerView
+    lateinit var moviesAdapter:ItemAdapter
+    lateinit var musicAdapter:ItemAdapter
+
     val firebaseDatabase: FirebaseDatabase = FirebaseDatabase.getInstance()
-    val databaseReference: DatabaseReference = firebaseDatabase.reference.child("UsersList")
+    val databaseReference: DatabaseReference = firebaseDatabase.reference
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recommendation)
+        if (supportActionBar!!.isShowing){
+            supportActionBar!!.hide()
+        }
+
+        recyclerview_music = findViewById(R.id.recyclerview_music)
+        recyclerview_movies = findViewById(R.id.recyclerview_movies)
 
         pieChart = findViewById(R.id.pieChart)
-
 
         val options = NLClassifier.NLClassifierOptions.builder().build()
         nlClassifier = NLClassifier.createFromFileAndOptions(
@@ -54,9 +69,66 @@ class RecommendationActivity : AppCompatActivity() {
 
         evaluateMessages()
 
+        retrieveRecommendedMovies()
+        retrieveRecommendedMusics()
 
+        recyclerview_movies.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
+        moviesAdapter = ItemAdapter(this,moviesList)
+        recyclerview_movies.adapter = moviesAdapter
+
+        recyclerview_music.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
+        musicAdapter = ItemAdapter(this,musicList)
+        recyclerview_music.adapter = musicAdapter
     }
 
+    private fun retrieveRecommendedMusics() {
+        var musicReference = databaseReference.child("MusicList")
+
+        musicReference.addValueEventListener(object :ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                musicList.clear()
+                for(eachdata in snapshot.children){
+                    if(eachdata!=null){
+                        val data = eachdata.getValue(Item::class.java)
+                        if (data != null) {
+                            musicList.add(data)
+                        }
+                    }
+                }
+                musicAdapter.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        })
+    }
+
+    private fun retrieveRecommendedMovies() {
+        var moviesReference = databaseReference.child("MovieList")
+
+        moviesReference.addValueEventListener(object :ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                moviesList.clear()
+                for(eachdata in snapshot.children){
+                    if(eachdata!=null){
+                        val data = eachdata.getValue(Item::class.java)
+                        if (data != null) {
+                            moviesList.add(data)
+                        }
+                    }
+                }
+                moviesAdapter.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        })
+
+    }
 
 
     //---------------------------------------------------
@@ -135,7 +207,7 @@ class RecommendationActivity : AppCompatActivity() {
         data.setValueFormatter(PercentFormatter())
         data.setValueTextSize(15f)
         data.setValueTypeface(Typeface.DEFAULT_BOLD)
-        data.setValueTextColor(Color.WHITE)
+        data.setValueTextColor(Color.BLACK)
         pieChart.setData(data)
 
         // undo all highlights
