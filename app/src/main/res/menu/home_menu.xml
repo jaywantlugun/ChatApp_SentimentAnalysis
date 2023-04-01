@@ -2,6 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/show_recommendations"
+        android:title="Recommendations" />
+
+    <item
         android:id="@+id/log_out"
         android:title=" Logout" />
 

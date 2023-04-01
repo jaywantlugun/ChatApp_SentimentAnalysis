@@ -24,6 +24,7 @@ class HomeActivity : AppCompatActivity() {
     val databaseReference: DatabaseReference = firebaseDatabase.reference.child("UsersList")
 
     var contactList=ArrayList<User>()
+    var messageList=ArrayList<Messages>()
     lateinit var contactAdapter: ContactAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +40,31 @@ class HomeActivity : AppCompatActivity() {
         contactAdapter = ContactAdapter(this,contactList)
         recyclerview.adapter = contactAdapter
 
+        retrieveAllMessages()
+
+    }
+
+    private fun retrieveAllMessages() {
+        var chatReference = databaseReference.child(userId).child("Chats")
+
+        chatReference.addListenerForSingleValueEvent(object:ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                messageList.clear()
+                for(data in snapshot.children){
+                    for(chats in data.children){
+                        val chatdata = chats.getValue(Messages::class.java)
+                        if (chatdata != null) {
+                            messageList.add(chatdata)
+                        }
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        })
     }
 
     private fun retrieveContactsFromDatabase() {
@@ -84,6 +110,15 @@ class HomeActivity : AppCompatActivity() {
     }
     //function of logout menu
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        if(item.itemId == R.id.show_recommendations){
+
+            val intent= Intent(this,RecommendationActivity::class.java)
+            intent.putExtra("userid",userId)
+            intent.putExtra("message_list",messageList)
+            startActivity(intent)
+
+        }
 
         if(item.itemId == R.id.log_out){
 

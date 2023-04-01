@@ -15,6 +15,9 @@
         android:theme="@style/Theme.ChatApp"
         tools:targetApi="31">
         <activity
+            android:name=".RecommendationActivity"
+            android:exported="false" />
+        <activity
             android:name=".SentimentActivity"
             android:exported="false" />
         <activity
