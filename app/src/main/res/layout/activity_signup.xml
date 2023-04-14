@@ -59,6 +59,8 @@
         android:layout_height="50dp"
         android:drawableStart="@drawable/ic_baseline_local_phone_24"
         android:hint="Phone Number"
+        android:inputType="number"
+        android:maxLength="8"
         android:drawablePadding="5dp"
         />
 
